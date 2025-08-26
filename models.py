@@ -93,3 +93,19 @@ def save_game(database, player1, player2, winner, captures):
     database.commit()
     print("Game saved successfully!")
     return True
+
+# -----------------------------
+# Get a user's stats
+# -----------------------------
+def get_user_stats(session, name):
+    if not name:
+        print("Error: Name cannot be empty.")
+        return 0, 0
+
+    user = session.query(User).filter_by(name=name).first()
+
+    if user:
+        return user.wins, user.losses
+    else:
+        print(f"No user found with name {name}.")
+        return 0, 0
