@@ -30,3 +30,21 @@ class Game(Base):
             return {"black_captures": 0, "white_captures": 0}
         black, white = self.captures.split(",")
         return {"black_captures": int(black), "white_captures": int(white)}
+
+# -----------------------------
+# Add or get existing user
+# -----------------------------
+def add_user(session, name):
+    if not name:
+        print("Error: Name cannot be empty.")
+        return None
+    # Check if user already exists
+    existing_user = session.query(User).filter_by(name=name).first()
+    if existing_user:
+        return existing_user
+    # Create new user
+    user = User(name=name)
+    session.add(user)
+    session.commit()
+    print(f"User {name} added successfully.")
+    return user
