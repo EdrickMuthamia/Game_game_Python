@@ -1,7 +1,5 @@
 from sqlalchemy import Column, Integer, String, ForeignKey
 from database import Base
-import json
-
 
 # -----------------------------
 # User table
@@ -13,7 +11,6 @@ class User(Base):
     wins = Column(Integer, default=0)
     losses = Column(Integer, default=0)
 
-
 # -----------------------------
 # Game table
 # -----------------------------
@@ -22,19 +19,14 @@ class Game(Base):
     id = Column(Integer, primary_key=True)
     player1_id = Column(Integer, ForeignKey('users.id'))
     player2_id = Column(Integer, ForeignKey('users.id'))
-    winner_id = Column(Integer, ForeignKey('users.id'))
+    winner_id = Column(Integer, ForeignKey('users.id'), nullable=True)  # Can be null for ties
     captures = Column(String)
 
-    # Save captures in text form
-    def save_captures(self, captured):
-        if captured:
-            self.captures = json.dumps(captured)
-        else:
-            self.captures = "{}"
+    def save_captures(self, black, white):
+        self.captures = f"{black},{white}"
 
-    # Load captures back into dictionary form
     def load_captures(self):
-        if self.captures:
-            return json.loads(self.captures)
-        else:
+        if not self.captures:
             return {"black_captures": 0, "white_captures": 0}
+        black, white = self.captures.split(",")
+        return {"black_captures": int(black), "white_captures": int(white)}
