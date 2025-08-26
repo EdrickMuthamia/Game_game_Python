@@ -48,3 +48,48 @@ def add_user(session, name):
     session.commit()
     print(f"User {name} added successfully.")
     return user
+
+# -----------------------------
+# Save the game
+# -----------------------------
+def save_game(database, player1, player2, winner, captures):
+    # Check if players exist
+    if not player1 or not player2:
+        print("Error: Both players are required!")
+        return False
+    # Create new game record
+    game = Game()
+    game.player1_id = player1.id
+    game.player2_id = player2.id
+    game.winner_id = winner.id if winner else None
+
+    # Set captures
+    black_captures = 0
+    white_captures = 0
+    if captures:
+        if isinstance(captures, list) and len(captures) >= 2:
+            black_captures = captures[0]
+            white_captures = captures[1]
+        elif isinstance(captures, dict):
+            black_captures = captures.get("black_captures", 0)
+            white_captures = captures.get("white_captures", 0)
+
+    game.save_captures(black_captures, white_captures)
+    database.add(game)
+
+    # Update player records
+    if winner == player1:
+        player1.wins += 1
+        player2.losses += 1
+        print(f"{player1.name} wins!")
+    elif winner == player2:
+        player2.wins += 1
+        player1.losses += 1
+        print(f"{player2.name} wins!")
+    else:
+        print("It's a tie!")
+
+    # Save to database
+    database.commit()
+    print("Game saved successfully!")
+    return True
