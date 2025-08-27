@@ -19,8 +19,8 @@ class Game(Base):
     id = Column(Integer, primary_key=True)
     player1_id = Column(Integer, ForeignKey('users.id'))
     player2_id = Column(Integer, ForeignKey('users.id'))
-    winner_id = Column(Integer, ForeignKey('users.id'), nullable=True)  # Can be null for ties
-    captures = Column(String)
+    winner_id = Column(Integer, ForeignKey('users.id'), nullable=True)  # null for ties
+    captures = Column(Integer, default=0)
 
     def save_captures(self, black, white):
         self.captures = f"Black {black}, White{white}"
@@ -73,7 +73,6 @@ def save_game(database, player1, player2, winner, captures):
         elif isinstance(captures, dict):
             black_captures = captures.get("black_captures", 0)
             white_captures = captures.get("white_captures", 0)
-
     game.save_captures(black_captures, white_captures)
     database.add(game)
 
