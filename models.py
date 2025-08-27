@@ -23,7 +23,7 @@ class Game(Base):
     captures = Column(String)
 
     def save_captures(self, black, white):
-        self.captures = f"{black},{white}"
+        self.captures = f"Black {black}, White{white}"
 
     def load_captures(self):
         if not self.captures:
