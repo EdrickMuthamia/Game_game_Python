@@ -70,3 +70,13 @@ class GoBoard:
         for nx, ny in neighbors:
             if 0 <= nx < self.size and 0 <= ny < self.size:
                 self.remove_group(nx, ny, color)
+    
+    def pass_turn(self):
+        self.passes = self.passes + 1
+        if self.current_player == 1:
+            color = "black"
+            self.current_player = 2
+        else:
+            color = "white"
+            self.current_player = 1
+        print(f"Player {color} passed.")
