@@ -86,3 +86,23 @@ class GoBoard:
             return True
         else:
             return False
+    def calculate_score(self):
+        black_points = 0
+        white_points = 0
+        
+        for row in range(self.size):
+            for col in range(self.size):
+                if self.board[row][col] == 1:
+                    black_points += 1
+                elif self.board[row][col] == 2:
+                    white_points += 1
+
+        # Add captured stones
+        black_points += self.captured_white
+        white_points += self.captured_black
+
+        # Show scores
+        print("Black score:", black_points, "(stones +", self.captured_white, "captured)")
+        print("White score:", white_points, "(stones +", self.captured_black, "captured)")
+
+        return black_points, white_points
