@@ -1,3 +1,6 @@
 from game_logic import GoBoard
-from database import Session, add_user, save_game, get_user_stats
-from models import User
+from models import save_game
+
+def print_board(board):
+    # Print column numbers
+    print("  " + " ".join(str(i) for i in range(board.size)))
