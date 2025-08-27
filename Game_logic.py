@@ -16,7 +16,7 @@ class GoBoard:
         self.captured_black = 0  # Black stones captured by white
         self.captured_white = 0  # White stones captured by black
         print("New 9x9 Go board created.")
-        
+
     def place_stone(self, x, y):
         
         if x < 0 or x >= self.size or y < 0 or y >= self.size:
@@ -60,3 +60,13 @@ class GoBoard:
                 if self.board[nx][ny] == 0: 
                     return True
         return False
+    
+    def remove_group(self, x, y, color):
+        
+        if self.board[x][y] != color:
+            return
+        self.board[x][y] = 0  # remove stone
+        neighbors = [(x - 1, y), (x + 1, y), (x, y - 1), (x, y + 1)]
+        for nx, ny in neighbors:
+            if 0 <= nx < self.size and 0 <= ny < self.size:
+                self.remove_group(nx, ny, color)
