@@ -128,3 +128,27 @@ def get_user_games(session, name):
         return games
     else:
         return []
+# -----------------------------
+# Update user stats manually
+# -----------------------------
+def update_user_stats(session, user_id, wins_increment=0, losses_increment=0):
+    if not user_id:
+        print("Error: User ID is required.")
+        return False
+
+    user = session.query(User).filter_by(id=user_id).first()
+    if user:
+        user.wins += wins_increment
+        user.losses += losses_increment
+
+        # Ensure non-negative values
+        if user.wins < 0:
+            user.wins = 0
+        if user.losses < 0:
+            user.losses = 0
+
+        session.commit()
+        return True
+    else:
+        print("Error: User not found.")
+        return False
