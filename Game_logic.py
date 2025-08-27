@@ -80,3 +80,9 @@ class GoBoard:
             color = "white"
             self.current_player = 1
         print(f"Player {color} passed.")
+    def is_game_over(self):
+        if self.passes >= 2:
+            print("Game over: two passes in a row.")
+            return True
+        else:
+            return False
