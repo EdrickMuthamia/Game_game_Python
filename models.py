@@ -109,3 +109,22 @@ def get_user_stats(session, name):
     else:
         print(f"No user found with name {name}.")
         return 0, 0
+# -----------------------------
+# Get game history for a user
+# -----------------------------
+def get_user_games(session, name):
+    if not name:
+        return []
+
+    user = session.query(User).filter_by(name=name).first()
+    if not user:
+        return []
+
+    games = session.query(Game).filter(
+        (Game.player1_id == user.id) | (Game.player2_id == user.id)
+    ).all()
+
+    if games:
+        return games
+    else:
+        return []
