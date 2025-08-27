@@ -34,3 +34,36 @@ def handle_view_stats(session):
         print(f"{name}: Wins {wins}, Losses {losses}")
     else:
         print("Name cannot be empty.")
+
+def main():
+    # Initialize database
+    Session = init_db()
+    if not Session:
+        print("Database initialization failed.")
+        return
+
+    session = Session()
+
+    menu_options = {
+        '1': handle_play_game,
+        '2': handle_view_stats
+    }
+    while True:
+        print("\nGo Game Menu:")
+        print("1. Play Game")
+        print("2. View User Stats")
+        print("3. Exit")
+
+        choice = input("Choose: ").strip()
+
+        if choice == '3':
+            print("Thank You For Playing Go Game")
+            session.close()
+            break
+        elif choice in menu_options:
+            menu_options[choice](session)
+        else:
+            print("Invalid choice.")
+
+if __name__ == "__main__":
+    main()
