@@ -10,7 +10,7 @@ def init_db():
     max_attempts = 3
 
     while attempt < max_attempts:
-        engine = create_engine('sqlite:///my_first_go88.db', echo=True)
+        engine = create_engine('sqlite:///my_first_go88.db')
 
         if engine is not None:
             # Create tables
