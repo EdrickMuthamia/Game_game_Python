@@ -25,3 +25,12 @@ def handle_play_game(session):
         player2 = add_user(session, p2)
         if player1 and player2:
             play_game(player1, player2, session)
+
+def handle_view_stats(session):
+    #Handle the view stats option.
+    name = input("Enter name: ").strip()
+    if name:
+        wins, losses = get_user_stats(session, name)
+        print(f"{name}: Wins {wins}, Losses {losses}")
+    else:
+        print("Name cannot be empty.")
