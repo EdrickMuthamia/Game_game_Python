@@ -16,3 +16,12 @@ def get_player_names():
         return None, None
 
     return p1, p2
+
+def handle_play_game(session):
+    # Handle the play game option.
+    p1, p2 = get_player_names()
+    if p1 and p2:
+        player1 = add_user(session, p1)
+        player2 = add_user(session, p2)
+        if player1 and player2:
+            play_game(player1, player2, session)
