@@ -1,4 +1,4 @@
-from game_logic import GoBoard
+from Game_logic import GoBoard
 from models import save_game
 
 
