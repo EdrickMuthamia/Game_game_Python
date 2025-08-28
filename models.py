@@ -9,7 +9,7 @@ class User(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String, unique=True, nullable=False)
     wins = Column(Integer, default=0)
-    losses = Column(String)
+    losses = Column(Integer, default=0)
 
 # -----------------------------
 # Game table
@@ -19,11 +19,11 @@ class Game(Base):
     id = Column(Integer, primary_key=True)
     player1_id = Column(Integer, ForeignKey('users.id'))
     player2_id = Column(Integer, ForeignKey('users.id'))
-    winner_id = Column(Integer, ForeignKey('users.id'), nullable=True)  # null for ties
+    winner_id = Column(Integer, ForeignKey('users.id'), nullable=True)
     captures = Column(Integer, default=0)
 
     def save_captures(self, black, white):
-        self.captures = f"Black {black}, White{white}"
+        self.captures = f"Black {black}, White {white}"
 
     def load_captures(self):
         if not self.captures:
@@ -107,4 +107,4 @@ def get_user_stats(session, name):
         return user.wins, user.losses
     else:
         print(f"No user found with name {name}.")
-        return 0,0
+        return 0, 0
