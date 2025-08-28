@@ -18,7 +18,7 @@ class GoBoard:
         print("New 9x9 Go board created.")
 
     def place_stone(self, x, y):
-        
+        #Checks if the coordinates are outside the board boundaries (less than 0 or greater than/equal to board size)
         if x < 0 or x >= self.size or y < 0 or y >= self.size:
             print("This spot is not on the board.")
             return False
@@ -27,7 +27,7 @@ class GoBoard:
             return False
 
         self.board[x][y] = self.current_player
-
+        #   Create a list of neighboring positions (up, down, left, right) around the placed stone
         neighbors = [(x - 1, y), (x + 1, y), (x, y - 1), (x, y + 1)]
 
         captured = 0
@@ -80,12 +80,14 @@ class GoBoard:
             color = "white"
             self.current_player = 1
         print(f"Player {color} passed.")
+
     def is_game_over(self):
         if self.passes >= 2:
             print("Game over: two passes in a row.")
             return True
         else:
             return False
+            
     def calculate_score(self):
         black_points = 0
         white_points = 0
