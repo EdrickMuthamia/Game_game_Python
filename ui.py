@@ -1,12 +1,11 @@
 from game_logic import GoBoard
 from models import save_game
 
-def print_board(board):
-    
- print("  " + " ".join(str(i) for i in range(board.size)))
 
-     
-     for row in range(board.size):
+def print_board(board):
+    print("  " + " ".join(str(i) for i in range(board.size)))
+
+    for row in range(board.size):
         symbols = []
         for cell in board.board[row]:
             if cell == 0:
@@ -17,7 +16,9 @@ def print_board(board):
                 symbols.append("W")
         print(f"{row} " + " ".join(symbols))
 
-        def get_move(current_player):player_name = "Black" if current_player == 1 else "White"
+
+def get_move(current_player):
+    player_name = "Black" if current_player == 1 else "White"
 
     for attempt in range(3):
         move = input(f"Player {player_name}, enter move (x y) or 'pass': ").strip()
@@ -30,9 +31,10 @@ def print_board(board):
             x, y = int(parts[0]), int(parts[1])
             if x >= 0 and y >= 0:
                 return x, y
-            print("Invalid input. Use format '3 4' or 'pass'.")
+        print("Invalid input. Use format '3 4' or 'pass'.")
 
     return None
+
 
 def play_game(player1, player2, session):
     if not player1 or not player2:
@@ -42,9 +44,8 @@ def play_game(player1, player2, session):
     board = GoBoard()
     print_board(board)
 
-    
     while not board.is_game_over():
-        move = "get_move"(board.current_player)
+        move = get_move(board.current_player)
         player_name = "Black" if board.current_player == 1 else "White"
 
         if move is None:
@@ -61,7 +62,6 @@ def play_game(player1, player2, session):
 
         print_board(board)
 
-    
     black_score, white_score = board.calculate_score()
     print(f"Scores: Black {black_score}, White {white_score}")
 
@@ -83,5 +83,3 @@ def play_game(player1, player2, session):
     print(f"Captures: Black {board.captured_black}, White {board.captured_white}")
     print(f"{player1.name} stats: Wins {player1.wins}, Losses {player1.losses}")
     print(f"{player2.name} stats: Wins {player2.wins}, Losses {player2.losses}")
-
-
