@@ -2,11 +2,11 @@ from game_logic import GoBoard
 from models import save_game
 
 def print_board(board):
-    # Print column numbers
-    print("  " + " ".join(str(i) for i in range(board.size)))
+    
+ print("  " + " ".join(str(i) for i in range(board.size)))
 
-     # Print each row with row number
-    for row in range(board.size):
+     
+     for row in range(board.size):
         symbols = []
         for cell in board.board[row]:
             if cell == 0:
@@ -17,8 +17,7 @@ def print_board(board):
                 symbols.append("W")
         print(f"{row} " + " ".join(symbols))
 
-        def get_move(current_player):
-    player_name = "Black" if current_player == 1 else "White"
+        def get_move(current_player):player_name = "Black" if current_player == 1 else "White"
 
     for attempt in range(3):
         move = input(f"Player {player_name}, enter move (x y) or 'pass': ").strip()
@@ -31,8 +30,7 @@ def print_board(board):
             x, y = int(parts[0]), int(parts[1])
             if x >= 0 and y >= 0:
                 return x, y
-
-                  print("Invalid input. Use format '3 4' or 'pass'.")
+            print("Invalid input. Use format '3 4' or 'pass'.")
 
     return None
 
@@ -44,9 +42,9 @@ def play_game(player1, player2, session):
     board = GoBoard()
     print_board(board)
 
-    # Main game loop
+    
     while not board.is_game_over():
-        move = get_move(board.current_player)
+        move = "get_move"(board.current_player)
         player_name = "Black" if board.current_player == 1 else "White"
 
         if move is None:
@@ -63,11 +61,10 @@ def play_game(player1, player2, session):
 
         print_board(board)
 
-    # Calculate results
+    
     black_score, white_score = board.calculate_score()
     print(f"Scores: Black {black_score}, White {white_score}")
 
-    # Determine winner
     if black_score > white_score:
         winner, winner_name = player1, player1.name
     elif white_score > black_score:
@@ -77,7 +74,6 @@ def play_game(player1, player2, session):
 
     print(f"Winner: {winner_name}")
 
-    # Save game and show stats
     captures = {
         "black_captures": board.captured_black,
         "white_captures": board.captured_white
