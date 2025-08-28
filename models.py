@@ -9,7 +9,7 @@ class User(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String, unique=True, nullable=False)
     wins = Column(Integer, default=0)
-    losses = Column(Integer, default=0)
+    losses = Column(String)
 
 # -----------------------------
 # Game table
